@@ -1,0 +1,565 @@
+[
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "Imprint",
+    "expression": "grel:value.find(/\\d{4}/)[0]",
+    "onError": "set-to-blank",
+    "newColumnName": "Print year",
+    "columnInsertIndex": 10,
+    "description": "Create column Print year at index 10 based on column Imprint using expression grel:value.find(/\\d{4}/)[0]"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "Imprint",
+    "expression": "grel:value",
+    "onError": "set-to-blank",
+    "newColumnName": "Print",
+    "columnInsertIndex": 10,
+    "description": "Create column Print at index 10 based on column Imprint using expression grel:value"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Print",
+    "expression": "value.replace(/\\d{4}/,\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Print using expression value.replace(/\\d{4}/,\"\")"
+  },
+  {
+    "op": "core/column-split",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Print",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": "[,:]",
+    "regex": true,
+    "maxColumns": 2,
+    "description": "Split column Print by separator"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Print 1",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          "London ",
+          "London",
+          "[London",
+          "Lond[on] ",
+          "[London?] "
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "London "
+      },
+      {
+        "from": [
+          "[].",
+          "."
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": ""
+      },
+      {
+        "from": [
+          "Liverpool",
+          "Liverpool "
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Liverpool"
+      },
+      {
+        "from": [
+          "Cambridge ",
+          "Cambridge"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Cambridge "
+      }
+    ],
+    "description": "Mass edit cells in column Print 1"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Print 2",
+    "expression": "value.trim()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Print 2 using expression value.trim()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Print 2",
+    "expression": "value.replace(\", .\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Print 2 using expression value.replace(\", .\",\"\")"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Print 2",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          ".",
+          "[.]",
+          "[?]",
+          ". [.]",
+          "] "
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": ""
+      },
+      {
+        "from": [
+          "Lackington, Allen & Co.",
+          "Lackington, Allen, & Co."
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Lackington, Allen & Co."
+      },
+      {
+        "from": [
+          "G. G. J. & J. Robinson",
+          "[G. G. & J.] Robinson"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "G. G. J. & J. Robinson"
+      },
+      {
+        "from": [
+          "Privately printed",
+          "[Privately printed"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Privately printed"
+      },
+      {
+        "from": [
+          "Osgood & McIlvaine,  [].",
+          "Osgood, McIlvaine"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Osgood & McIlvaine"
+      },
+      {
+        "from": [
+          "J. Williams, [.].",
+          "J. Williams"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "J. Williams"
+      }
+    ],
+    "description": "Mass edit cells in column Print 2"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Print 1",
+    "newColumnName": "Place",
+    "description": "Rename column Print 1 to Place"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Print 2",
+    "newColumnName": "Press",
+    "description": "Rename column Print 2 to Press"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Press",
+    "expression": "value.replace(/\\band\\b/,\"&\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Press using expression value.replace(/\\band\\b/,\"&\")"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "Personal author",
+    "expression": "grel:value",
+    "onError": "set-to-blank",
+    "newColumnName": "Lastname",
+    "columnInsertIndex": 6,
+    "description": "Create column Lastname at index 6 based on column Personal author using expression grel:value"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "Lifespan",
+          "expression": "value",
+          "columnName": "Lifespan",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": "fl. 1630",
+                "l": "fl. 1630"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1679",
+                "l": "fl. 1679"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1669",
+                "l": "fl. 1669"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1623",
+                "l": "fl. 1623"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "baseColumnName": "Lastname",
+    "expression": "grel:value.find(/[0-9?]+-[0-9?]+|ca\\.\\s*\\d{4}-\\d{4}|d\\.\\s*\\d{4}|fl\\.\\s*\\d{4}/)[0]",
+    "onError": "set-to-blank",
+    "newColumnName": "Life year",
+    "columnInsertIndex": 7,
+    "description": "Create column Life year at index 7 based on column Lastname using expression grel:value.find(/[0-9?]+-[0-9?]+|ca\\.\\s*\\d{4}-\\d{4}|d\\.\\s*\\d{4}|fl\\.\\s*\\d{4}/)[0]"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "Lifespan",
+          "expression": "value",
+          "columnName": "Lifespan",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": "fl. 1630",
+                "l": "fl. 1630"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1679",
+                "l": "fl. 1679"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1669",
+                "l": "fl. 1669"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1623",
+                "l": "fl. 1623"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Lastname",
+    "expression": "value.replace(/[0-9?]+-[0-9?]+|ca\\.\\s*\\d{4}-\\d{4}|d\\.\\s*\\d{4}|fl\\.\\s*\\d{4}/,\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Lastname using expression value.replace(/[0-9?]+-[0-9?]+|ca\\.\\s*\\d{4}-\\d{4}|d\\.\\s*\\d{4}|fl\\.\\s*\\d{4}/,\"\")"
+  },
+  {
+    "op": "core/column-split",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "Lifespan",
+          "expression": "value",
+          "columnName": "Lifespan",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": "fl. 1630",
+                "l": "fl. 1630"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1679",
+                "l": "fl. 1679"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1669",
+                "l": "fl. 1669"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1623",
+                "l": "fl. 1623"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Lastname",
+    "guessCellType": true,
+    "removeOriginalColumn": true,
+    "mode": "separator",
+    "separator": ",",
+    "regex": false,
+    "maxColumns": 2,
+    "description": "Split column Lastname by separator"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "Lifespan",
+          "expression": "value",
+          "columnName": "Lifespan",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": "fl. 1630",
+                "l": "fl. 1630"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1679",
+                "l": "fl. 1679"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1669",
+                "l": "fl. 1669"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1623",
+                "l": "fl. 1623"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Lastname 1",
+    "expression": "value.toUppercase()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Lastname 1 using expression value.toUppercase()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "Lifespan",
+          "expression": "value",
+          "columnName": "Lifespan",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": "fl. 1630",
+                "l": "fl. 1630"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1679",
+                "l": "fl. 1679"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1669",
+                "l": "fl. 1669"
+              }
+            },
+            {
+              "v": {
+                "v": "fl. 1623",
+                "l": "fl. 1623"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "Lastname 2",
+    "expression": "value.replace(\", .\",\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Lastname 2 using expression value.replace(\", .\",\"\")"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Lastname 2",
+    "expression": "value.trim()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Lastname 2 using expression value.trim()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Lastname 2",
+    "expression": "value.replace(/(?<=[a-z])[\\.,]$/,\"\")",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column Lastname 2 using expression value.replace(/(?<=[a-z])[\\.,]$/,\"\")"
+  },
+  {
+    "op": "core/mass-edit",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "Lastname 2",
+    "expression": "value",
+    "edits": [
+      {
+        "from": [
+          ".",
+          ""
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": ""
+      },
+      {
+        "from": [
+          "Richard",
+          "Richard, ?"
+        ],
+        "fromBlank": false,
+        "fromError": false,
+        "to": "Richard"
+      }
+    ],
+    "description": "Mass edit cells in column Lastname 2"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Lastname 1",
+    "newColumnName": "Lastname",
+    "description": "Rename column Lastname 1 to Lastname"
+  },
+  {
+    "op": "core/column-rename",
+    "oldColumnName": "Lastname 2",
+    "newColumnName": "Firstname & Title",
+    "description": "Rename column Lastname 2 to Firstname & Title"
+  }
+]
